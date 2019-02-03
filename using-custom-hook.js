@@ -1,21 +1,20 @@
-const useUpdateButtonTextByClick = (clicks, messages, onFinished) => {
-  const [buttonText, setButtonText] = useState(messages[0]);
+const useTextByCount = (count, messages, onFinished) => {
+  const [text, setText] = useState(messages[0]);
 
   useEffect(() => {
-    if (clicks < messages.length) {
-      return setButtonText(messages[clicks]);
+    if (count < messages.length) {
+      return setText(messages[count]);
     }
     return onFinished();
-  });
+  }, [count]);
 
-  return buttonText;
+  return text;
 };
 
+const messages = ['Cancel', 'Really?', 'Don\'t leave me!', 'OK, fine!']
 const CancelAccountDeletion = ({onClick}) => {
   const [clicks, setClicks] = useState(0);
-  const buttonText = useUpdateButtonTextByClick(
-    ['Cancel', 'Really?', 'Don\'t leave me!', 'OK, fine!'],
-    onClick);
+  const buttonText = useTextByCount(clicks, messages, onClick);
 
   return (
     <button onClick={() => setClicks(clicks+1)}
